@@ -1,0 +1,88 @@
+* {
+    font-family: "Droid Sans", "Font Awesome 6 Free";
+    font-size: 13px;
+}
+
+window#waybar {
+    color: #cacaca;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+window#waybar > box {
+    background-color: #1a1a1a;
+    border: 1px solid #1f1f1f;
+    border-radius: 6px;
+    min-height: 30px;
+    margin: 0 6px 6px 6px;
+    padding: 3px;
+}
+
+/* Transition */
+#custom-appsbtn,
+#workspaces button {
+    transition: all 0.5s cubic-bezier(0.33, 1, 0.68, 1) 0s;
+}
+
+#cpu,
+#memory,
+#temperature {
+    margin: 0 10px;
+}
+
+#network,
+#pulseaudio,
+#language {
+    margin: 0 12px;
+}
+
+#custom-appsbtn {
+    background-color: #6d399e;
+    color: #1a1a1a;
+    border: 2px solid #6d399e;
+    border-radius: 50%;
+    margin: 3px;
+    padding: 0 4px;
+}
+
+#custom-appsbtn:hover {
+    background-color: #1a1a1a;
+    color: #6d399e;
+}
+
+#workspaces {
+    padding: 0 15px;
+}
+
+#workspaces button {
+    background-color: #222222;
+    border: none;
+    border-radius: 4px;
+    color: #cacaca;
+    margin: 3px 5px;
+    padding: 0 4px;
+    box-shadow: none;
+    text-shadow: none;
+    font-weight: normal;
+}
+
+#workspaces button.active {
+    box-shadow: inset 0 -2px #6d399e;
+    background-color: #272727;
+}
+
+#workspaces button:hover,
+#workspaces button.active:hover  {
+    background: none;
+    background-color: #3d3d3d;
+    border: none;
+}
+
+#language {
+    font-weight: bold;
+    font-family: "Droid Sans Mono";
+}
+
+#clock {
+    padding: 0 5px;
+    margin: 3px 0 3px 10px;
+}

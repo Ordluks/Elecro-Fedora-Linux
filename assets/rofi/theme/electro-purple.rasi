@@ -1,0 +1,19 @@
+/*******************************************************************************
+ * ELECTRO THEME FOR ROFI 
+ * User                 : Ordluks               
+ * Theme Repo           : https://github.com/Ordluks/electro-purple-rofi-theme
+ *******************************************************************************/
+
+* {
+    bg0:    #1A1A1A;
+    bg1:    #262626;
+    bg2:    #3D3D3D80;
+    bg3:    #6D399E;
+    bg4:    #353535;
+    fg0:    #E6E6E6;
+    fg1:    #FFFFFF;
+    fg2:    #969696;
+    fg3:    #3D3D3D;
+}
+
+@import "electro-common.rasi"

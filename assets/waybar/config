@@ -1,0 +1,55 @@
+{
+    "position": "bottom",
+    "modules-left": ["custom/appsbtn", "cpu", "memory", "temperature"],
+    "modules-center": ["hyprland/workspaces"],
+    "modules-right": ["network", "pulseaudio", "hyprland/language", "clock"],
+    "custom/appsbtn": {
+        "format": "",
+        "tooltip": false,
+        "on-click": "rofi -show drun -show-icons"
+    },
+    "cpu": {
+        "format": " {usage}%",
+        "tooltip": false
+    },
+    "memory": {
+        "format": " {}%",
+        "tooltip": false
+    },
+    "temperature": {
+        "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "format": " {temperatureC}°C",
+        "interval": 2,
+        "tooltip": false
+    },
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "on-scroll-up": "hyprctl dispatch workspace r-1",
+        "on-scroll-down": "hyprctl dispatch workspace r+1",
+        "all-outputs": false,
+        "persistent_workspaces": {
+          "*": 5
+        }
+    },
+    "network": {
+        "format-ethernet": "",
+        "tooltip-format-ethernet": " {bandwidthDownBytes}   {bandwidthUpBytes}",
+        "tooltip": true,
+        "interval": 1
+    },
+    "pulseaudio": {
+        "format": " {volume}",
+        "format-bluetooth": " {volume}",
+        "format-muted": "",
+        "tooltip": false
+    },
+    "hyprland/language": {
+        "format-en": "EN",
+        "format-ru": "RU",
+        "keyboard-name": "semico---usb-gaming-keyboard-"
+    },
+    "clock": {
+        "format": "{:%e %B %Y %a  |  %H:%M}",
+        "tooltip": false
+    }
+}
