@@ -1,27 +1,63 @@
-import subprocess
-import logger
+import subprocess, os.path, logger
+from shutil import copyfile, copytree
 
-def run_shell(command):
-  proc = subprocess.Popen(command,
-                          stderr=subprocess.PIPE, 
-                          stdout=subprocess.PIPE,
-                          shell=True,
-                          universal_newlines=True)
+def run_shell_base(command):
+  proc = subprocess.Popen(
+    command,
+    stderr=subprocess.PIPE, 
+    stdout=subprocess.PIPE,
+    shell=True,
+    universal_newlines=True
+  )
   std_out, std_err = proc.communicate()
   return proc.returncode, std_out, std_err
 
+def run_shell(command: str, on_success=None, on_fail=None):
+  exit_code, out, err = run_shell_base(command)
+  if exit_code == 0:
+    if on_success is not None:
+      on_success()
+  else:
+    if on_fail is not None:
+      on_fail(err, out)
+    else:
+      logger.error(f'Command "{command.split(' ')[0]}" failed:\n{out}\n\n{err}')
+
+    raise OSError
+
+def is_package_installed(name):
+  return run_shell_base(f'dnf list installed "{name}"')[0] == 0
+
 def install_package(name):
-  if run_shell(f'dnf list installed "{name}"')[0] == 0:
+  if is_package_installed(name):
     logger.info(f'Package "{name}" already installed')
     return
   
-  exit_code, _out, err = run_shell(f'dnf install {name} -y')
-  if exit_code == 0:
-    logger.success(f'Package "{name}" was installed')
-  else:
-    logger.error(f'Can not install "{name}":\n{err}')
-    exit(1)
+  run_shell(
+    f'dnf install {name} -y',
+    on_success=lambda: logger.success(f'Package "{name}" was installed'),
+    on_fail=lambda err, _: logger.error(f'Can not install "{name}":\n{err}')
+  )
 
 def install_packages_list(names):
   for name in names:
     install_package(name)
+
+ASSETS_PATH = 'assets'
+
+def copy_asset(asset_path, to):
+  if os.path.exists(to): return
+  try:
+    copyfile(os.path.join(ASSETS_PATH, asset_path), to)
+  except OSError as error:
+    logger.error(f'Can not copy file "{asset_path}":\n{error}')
+    raise OSError
+
+def copy_asset_tree(asset_path, to):
+  if os.path.exists(to): return
+  try:
+    copytree(os.path.join(ASSETS_PATH, asset_path), to)
+  except OSError as error:
+    logger.error(f'Can not copy folder "{asset_path}":\n{error}')
+    raise OSError
+  

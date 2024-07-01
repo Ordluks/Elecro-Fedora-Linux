@@ -24,8 +24,7 @@ def install_nvidia_driver():
   
   logger.info('Update GRUB config')
 
-  if run_shell('grub2-mkconfig -o /boot/grub2/grub.cfg')[0] != 0:
-    logger.error('Command "grub2-mkconfig" failed')
-  else:
-    logger.success('NVidia driver was installed')
-
+  run_shell(
+    'grub2-mkconfig -o /boot/grub2/grub.cfg',
+    on_success=lambda: logger.success('NVidia driver was installed')
+  )

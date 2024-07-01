@@ -1,6 +1,7 @@
 import sys, logger
 from getpass import getuser
 from nvidia import install_nvidia_driver
+from sddm import install_sddm
 
 def read_nth_arg(n):
   try:
@@ -23,7 +24,12 @@ def main():
 
   user_home = get_user_home_arg()
 
-  install_nvidia_driver()
-  input('Press enter')
+  try:
+    install_nvidia_driver()
+    install_sddm()
+  except OSError:
+    logger.echo('\n\n\nIt seams something went wrong during installation. You can found logs in ./logs')
+
+  input('')
 
 main()
