@@ -1,16 +1,17 @@
-import sys, logger
+import sys, os, logger
 from getpass import getuser
 from nvidia import install_nvidia_driver
 from sddm import install_sddm
+from hyprland import install_hyprland
 
 def read_nth_arg(n):
   try:
-    return sys.argv[n]
+    return sys.argv[n + 1]
   except IndexError:
     return None
   
 def get_user_home_arg():
-  result = read_nth_arg(1)
+  result = read_nth_arg(0)
   if result is None:
     logger.error('Not found user home argument')
     exit(1)
@@ -27,9 +28,13 @@ def main():
   try:
     install_nvidia_driver()
     install_sddm()
+    install_hyprland(user_home)
   except OSError:
-    logger.echo('\n\n\nIt seams something went wrong during installation. You can found logs in ./logs')
-
-  input('')
+    logger.echo('\n\nIt seams something went wrong during installation. You can found logs in ./logs')
+    input()
+    exit(1)
+  else:
+    input('Reboot required. Press enter to reboot.')
+    os.system('systemctl reboot')
 
 main()

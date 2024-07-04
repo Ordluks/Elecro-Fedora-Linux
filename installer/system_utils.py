@@ -14,6 +14,7 @@ def run_shell_base(command):
 
 def run_shell(command: str, on_success=None, on_fail=None):
   exit_code, out, err = run_shell_base(command)
+  logger.log(f'{out}\n{err}')
   if exit_code == 0:
     if on_success is not None:
       on_success()

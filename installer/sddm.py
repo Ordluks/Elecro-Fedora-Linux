@@ -40,7 +40,7 @@ def install_sddm():
   logger.info('Disabling GDM and enabling SDDM...')
 
   run_shell(
-    'sudo systemctl disable gdm',
+    'systemctl disable gdm',
     on_fail=lambda err, _: logger.error(f'Unable to deactivate "gdm" service:\n{err}')
   )
 
@@ -53,8 +53,5 @@ def install_sddm():
     on_fail=unable_to_activate
   )
 
-  run_shell('systemctl stop gdm')
-  run_shell('systemctl start sddm')
-
-  logger.success('SDDM was installed')
+  logger.success('SDDM was installed\n')
   

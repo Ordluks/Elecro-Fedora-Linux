@@ -1,26 +1,25 @@
 import os.path, sys
 from datetime import datetime
 
+LOGS_DIR = 'logs'
+
+if not os.path.exists(LOGS_DIR):
+  os.mkdir(LOGS_DIR)
+
+_default_stdout = sys.stdout
+_file = open(os.path.join('logs', str(datetime.now()) + '.log'), 'w')
+
 class Logger:
-  def __init__(self):
-    self._terminal = sys.stdout
-    self._file = open(os.path.join('logs', str(datetime.now()) + '.log'), 'w')
-
   def write(self, text):
-    self._terminal.write(text)
-    self._file.write(text)
-
+    _default_stdout.write(text)
+    _file.write(text)
+  
   def flush(self):
-    self._terminal.flush()
-    self._file.flush()
+    _default_stdout.flush()
+    _file.write('\n')
+    _file.flush()
 
-  def _print_only_(self, text):
-    self._terminal.write(text)
-
-  def _to_file_only_(self, text):
-    self._file.write(text)
-
-sys.stdout = _logger = Logger()
+sys.stdout = Logger()
 
 def info(message):
   print(f'(Info) {message}')
@@ -32,7 +31,7 @@ def error(message):
   print(f'(Error) {message}')
 
 def echo(message):
-  _logger._print_only_(message)
+  _default_stdout.write(message)
 
 def log(message):
-  _logger._to_file_only_(message)
+  _file.write(message)

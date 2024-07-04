@@ -6,7 +6,9 @@ from grub_file_parser import GrubFile, GRUB_FILE_PATH
 KERNEL_OPTS_PROPERTY_NAME = 'GRUB_CMDLINE_LINUX'
 
 def install_nvidia_driver():
-  if not confirm('Do you need to install NVidia GPU driver'): return
+  if not confirm('Do you need to install NVidia GPU driver'):
+    print('\n')
+    return
 
   logger.info('Installing NVidia driver...')
 
@@ -26,5 +28,5 @@ def install_nvidia_driver():
 
   run_shell(
     'grub2-mkconfig -o /boot/grub2/grub.cfg',
-    on_success=lambda: logger.success('NVidia driver was installed')
+    on_success=lambda: logger.success('NVidia driver was installed\n')
   )
