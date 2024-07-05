@@ -3,6 +3,7 @@ from getpass import getuser
 from nvidia import install_nvidia_driver
 from sddm import install_sddm
 from hyprland import install_hyprland
+from tweaks import install_tweaks
 
 def read_nth_arg(n):
   try:
@@ -29,6 +30,7 @@ def main():
     install_nvidia_driver()
     install_sddm()
     install_hyprland(user_home)
+    install_tweaks(user_home)
   except OSError:
     logger.echo('\n\nIt seams something went wrong during installation. You can found logs in ./logs')
     input()

@@ -7,7 +7,7 @@ KERNEL_OPTS_PROPERTY_NAME = 'GRUB_CMDLINE_LINUX'
 
 def install_nvidia_driver():
   if not confirm('Do you need to install NVidia GPU driver'):
-    print('\n')
+    print()
     return
 
   logger.info('Installing NVidia driver...')

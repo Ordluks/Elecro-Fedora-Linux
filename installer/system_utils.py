@@ -46,19 +46,22 @@ def install_packages_list(names):
 
 ASSETS_PATH = 'assets'
 
-def copy_asset(asset_path, to):
-  if os.path.exists(to): return
+def copy_asset(asset: str, to: str):
+  target_dir = '/'.join(to.split('/')[:-1])
+  os.makedirs(target_dir, exist_ok=True)
+
   try:
-    copyfile(os.path.join(ASSETS_PATH, asset_path), to)
+    copyfile(os.path.join(ASSETS_PATH, asset), to)
   except OSError as error:
-    logger.error(f'Can not copy file "{asset_path}":\n{error}')
+    logger.error(f'Can not copy file "{asset}":\n{error}')
     raise OSError
 
-def copy_asset_tree(asset_path, to):
-  if os.path.exists(to): return
+def copy_asset_tree(asset: str, to):
+  os.makedirs(to, exist_ok=True)
+
   try:
-    copytree(os.path.join(ASSETS_PATH, asset_path), to)
+    copytree(os.path.join(ASSETS_PATH, asset), to, dirs_exist_ok=True)
   except OSError as error:
-    logger.error(f'Can not copy folder "{asset_path}":\n{error}')
+    logger.error(f'Can not copy folder "{asset}":\n{error}')
     raise OSError
   
